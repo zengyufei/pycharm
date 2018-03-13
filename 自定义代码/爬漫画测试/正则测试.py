@@ -5,3 +5,16 @@ str_js = 'eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)
 find_pattren = re.compile(r'p;}\(\'.*?\)\)')
 text = re.search(find_pattren, str_js).group()[4:-2]
 print(text)
+
+a=None
+a=max(a,3) if a is not None else 3
+print(a)
+
+def validateTitle(title):
+    # '/\:*?"<>|'
+    rstr = r"[\/\\\:\*\?\"\<\>\|]"
+    new_title = re.sub(rstr, "", title)
+    return new_title
+title = '第23回 后宫职业小剧场|幽默篇7'
+
+print(validateTitle(title))
