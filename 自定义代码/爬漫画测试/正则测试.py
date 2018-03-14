@@ -6,15 +6,26 @@ find_pattren = re.compile(r'p;}\(\'.*?\)\)')
 text = re.search(find_pattren, str_js).group()[4:-2]
 print(text)
 
-a=None
-a=max(a,3) if a is not None else 3
+a = None
+a = max(a, 3) if a is not None else 3
 print(a)
+
 
 def validateTitle(title):
     # '/\:*?"<>|'
     rstr = r"[\/\\\:\*\?\"\<\>\|]"
     new_title = re.sub(rstr, "", title)
     return new_title
+
+
 title = '第23回 后宫职业小剧场|幽默篇7'
 
 print(validateTitle(title))
+
+str222 = """
+&nbsp;&nbsp;&nbsp;&nbsp;在卦术师们的眼中，未来总是如雾里看花一般，充满着种种神秘和莫测。[看本书最新章节请到$>>>棉_._.花_._.糖_._.小_._.說_._.網<<<$www.mht.la]<br><br>&nbsp;&nbsp;&nbsp;&nbsp;不过在一位‘很有名’的卦师看来——未来随着人们</p></div>
+"""
+
+text = re.sub(re.compile(r'>>+'), ' ', str222)
+text = re.sub(re.compile(r'<<+'), ' ', text)
+print(text)

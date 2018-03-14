@@ -17,25 +17,9 @@ dcap["phantomjs.page.settings.userAgent"] = (
 dcap["phantomjs.page.settings.webSecurityEnabled"] = False
 dcap["phantomjs.page.settings.loadImages"] = False
 dcap["phantomjs.page.settings.diskCache"] = True
-driver = webdriver.PhantomJS(executable_path="D:/py/phantomjs-2.1.1-windows/bin/phantomjs.exe", desired_capabilities=dcap)
+driver = webdriver.PhantomJS(executable_path="D:/py/phantomjs-2.1.1-windows/bin/phantomjs.exe",
+                             desired_capabilities=dcap)
 
-
-# 反爬措施
-header = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36',
-    'Upgrade-Insecure-Requests': '1',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    'Accept-Language': 'zh-CN,zh;q=0.8',
-    'Accept-Encoding': 'gzip, deflate',
-    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-Anit-Forge-Token': 'None',
-    'X-Anit-Forge-Code': '0',
-    'Content-Length': '26',
-    'Connection': 'keep-alive',
-    'Pragma': 'no-cache',
-    'Cache-Control': 'no-cache',
-}
 
 class Tool:
     def __init__(self, url, headers={}):
@@ -45,6 +29,7 @@ class Tool:
         text = re.sub(re.compile('&nbsp;'), '', text)
         text = re.sub(re.compile('<br><br>|<br>|<br\s?/>'), '', text)
         self.page = html.fromstring(text)
+        self.text = text
 
     def xpath(self, path):
         return self.page.xpath(path)
@@ -81,3 +66,12 @@ class PhantomJSTool:
 
     def __str__(self):
         return self.text
+
+
+class PicTool:
+    def __init__(self, url, postdata, headers={}):
+        s = requests.Session()
+        r = s.post('http://m.1kkk.com/userdata.ashx', data=postdata)
+        _cookies = r.cookies
+        rs = s.get(url, headers=headers, cookies=_cookies)
+        self.content = rs.content
